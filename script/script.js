@@ -11,18 +11,27 @@ async function fetchAssincrono(pais) {
   );
   const dados = await resposta.json();
 
-  verificarMeses2020(dados);
+  metodoAno2020(dados);
 }
 
-function verificarMeses2020(dados) {
-  let cont = 0;
-  for (let index = 0; index < dados.length; index++) {
-    let data = dados[index].Date.substring(0, 7);
-    if (data === "2020-03") {
-      console.log(dados[index].Date);
-      cont += dados[index].Cases;
+function metodoAno2020(dados) {
+  console.log("casos de 2020");
+  for (let index_1 = 0; index_1 < 12; index_1++) {
+    var ultimoDiaMes = new Date(2020, index_1 + 1, 0).getDate();
+    for (let index = 0; index < dados.length; index++) {
+      let data = dados[index].Date.substring(0, 10);
+
+      if (index_1 + 1 < 10) {
+        if (data == `2020-0${index_1 + 1}-${ultimoDiaMes}`) {
+          console.log(dados[index].Cases);
+        }
+      } else {
+        if (data == `2020-${index_1 + 1}-${ultimoDiaMes}`) {
+          console.log(dados[index].Cases);
+        }
+      }
     }
   }
-  //console.log(dados[0].Cases);
-  console.log("quantidade de casos no mes " + cont);
 }
+
+//ultima verção

@@ -63,12 +63,4 @@
 .dropdown .dropdown__item .dropdown__submenu .dropdown__submenu--item:hover {
   text-decoration: underline;
 }
-
-main {
-  background-color: green;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  height: 50px;
-}
 /*# sourceMappingURL=style.css.map */
