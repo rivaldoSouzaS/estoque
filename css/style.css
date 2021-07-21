@@ -63,4 +63,25 @@
 .dropdown .dropdown__item .dropdown__submenu .dropdown__submenu--item:hover {
   text-decoration: underline;
 }
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.coluna {
+  width: 30%;
+  background-color: #cac1c1;
+  font-size: 20px;
+  color: #241e1e;
+  padding: 5px 0px;
+}
+
+td {
+  padding: 10px 0px;
+}
+
+tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
 /*# sourceMappingURL=style.css.map */
