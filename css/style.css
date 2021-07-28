@@ -64,6 +64,13 @@
   text-decoration: underline;
 }
 
+#titulo {
+  max-width: 90%;
+  margin: 0 auto;
+  text-align: center;
+  color: #241e1e;
+}
+
 .table {
   width: 100%;
   border-collapse: collapse;
