@@ -4,20 +4,28 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css" />
-    <title>Covid 19</title>
+    <title>Controle de Estoque</title>
   </head>
   <body>
     <header>
       <nav>
         <ul class="dropdown">
           <li class="dropdown__item">
-            Paises
+            Arquivo
 
             <ul class="dropdown__submenu">
-              <li class="dropdown__submenu--item">Brazil</li>
-              <li class="dropdown__submenu--item">Argentina</li>
+              <li class="dropdown__submenu--item">Cadastrar</li>
+              <li id="id_deletar" class="dropdown__submenu--item">Deletar</li>
             </ul>
+          </li>
+          <li class="dropdown__item item">
+            <a href="historico.html">Historico</a>
+            
+          </li>
+          <li id="cadastrar" class="dropdown__item item2">
+            Operação
           </li>
         </ul>
       </nav>
@@ -26,19 +34,71 @@
     <main>
       <div class="content">
         <div id="titulo">
-          <h1>Casos de COVID - 19 Por mês</h1>
+          <h1>Controle de estoque Agility Telecom BJ</h1>
         </div>
         <table class="table">
           <header class="cabecalho">
-            <th class="coluna">Ano</th>
-            <th class="coluna">Mes</th>
-            <th class="coluna">Quant.</th>
+            <th id="coluna_id" class="coluna">Id</th>
+            <th class="coluna">Desc</th>
+            <th id="coluna_qtd" class="coluna">Quant</th>
           </header>
-          <tbody class="corpo_tabela"></tbody>
+          <tbody class="corpo_tabela">
+            
+          </tbody>
         </table>
       </div>
+
+      <div class="over-cad">
+            <div class="box">
+              <form action="" class="formulario">
+                <label for="desc" class="label_input">Descrição</label>
+                <input id="input_des" type="desc" autocomplete="off" name="desc" class="input_item_salvar">
+                <label id="label-quant" for="quant" class="label_input">Quantidade</label>
+                <input id="input_qtd" type="quant" autocomplete="off" name="quant" class="input_item_salvar">
+
+                <div class="botoes_cadastro">
+                  <input id="botao_enviar" type="button" value="Enviar">
+                  <input id="botao_cencelar" type="button" value="Cencelar">
+                </div>
+              </form>
+
+              <img id="logo-agility" src="img/logo.png" alt="">
+            </div>
+      </div>
+
+      <div class="over-saida">
+        <div class="box">
+          
+          <form action="" class="formulario-saida">
+            <div class="switch__container">
+              <input id="switch-shadow" class="switch switch--shadow" type="checkbox">
+              <label for="switch-shadow"></label>
+              <p id="operacao"></p>
+            </div>
+            <select id="sl-saida" class="input_item" name="select">
+              <option id="" value="1" selected>Funcionario</option>
+            </select>
+            <label id="teste" for="desc" class="label_input">Descrição</label>
+            <input id="input_des_saida" type="text" disabled="" autocomplete="off" name="desc" class="input_item_saida" placeholder="digite a descrição">
+            <label id="label-quant-saida" for="quant" class="label_input">Quantidade</label>
+            <input id="input_qtd_saida" type="text" autocomplete="off" name="quant" class="input_item_saida">
+            
+
+            <div class="botoes_saida">
+              <input id="botao_enviar_saida" type="button" value="Enviar">
+              <input id="botao_cencelar_saida" type="button" value="Cencelar">
+            </div>
+          </form>
+          <img id="logo-agility-saida" src="img/logo.png" alt="">
+        </div>
+  </div>
+      
     </main>
 
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="script/script.js"></script>
   </body>
 </html>

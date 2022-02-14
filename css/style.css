@@ -5,14 +5,18 @@
   list-style: none;
   margin: 0;
   padding: 15px 20px;
-  background-color: #241e1e;
-  color: #cac1c1;
+  background-color: #48be74;
+  color: white;
   font-size: 25px;
 }
 
 .dropdown .dropdown__item {
   margin: 0 10px;
   position: relative;
+}
+
+.dropdown .dropdown__item:hover {
+  cursor: pointer;
 }
 
 .dropdown .dropdown__item:hover .dropdown__submenu {
@@ -25,7 +29,7 @@
 
 .dropdown .dropdown__item .dropdown__submenu {
   list-style: none;
-  background-color: #cac1c1;
+  background-color: #61e409;
   border-radius: 5px;
   margin: 10px 0px 0px 0px;
   padding: 15px;
@@ -44,16 +48,16 @@
 .dropdown .dropdown__item .dropdown__submenu:after {
   content: " ";
   border: 10px solid transparent;
-  border-bottom-color: #cac1c1;
+  border-bottom-color: #61e409;
   left: 25%;
   position: absolute;
-  bottom: 95px;
+  bottom: 115px;
   -webkit-transform: translateX(-110%);
           transform: translateX(-110%);
 }
 
 .dropdown .dropdown__item .dropdown__submenu .dropdown__submenu--item {
-  color: black;
+  color: white;
 }
 
 .dropdown .dropdown__item .dropdown__submenu .dropdown__submenu--item:not(:last-child) {
@@ -62,13 +66,24 @@
 
 .dropdown .dropdown__item .dropdown__submenu .dropdown__submenu--item:hover {
   text-decoration: underline;
+  cursor: pointer;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+a:hover {
+  color: white;
+  text-decoration: none;
 }
 
 #titulo {
   max-width: 90%;
   margin: 0 auto;
   text-align: center;
-  color: #241e1e;
+  color: #028b9c;
 }
 
 .table {
@@ -77,11 +92,21 @@
 }
 
 .coluna {
-  width: 30%;
-  background-color: #cac1c1;
+  width: 70%;
+  background-color: rgba(96, 190, 72, 0.39);
   font-size: 20px;
-  color: #241e1e;
+  color: #028b9c;
   padding: 5px 0px;
+}
+
+td {
+  color: #028b9c;
+  font-size: 20px;
+  padding-left: 5px;
+}
+
+#coluna_id, #coluna_qtd {
+  width: 15%;
 }
 
 td {
@@ -90,5 +115,292 @@ td {
 
 tr:nth-of-type(even) {
   background-color: #f3f3f3;
+}
+
+.over-cad {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.651);
+  display: none;
+  top: 0px;
+}
+
+.over-cad .box {
+  background-color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 2% 5% 2% 5%;
+  margin: 10% 10%;
+}
+
+.over-cad .box .formulario {
+  background-color: white;
+  padding: 5px 5px 0px 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 30%;
+  border-style: solid;
+  border-radius: 20px;
+  border-color: #059ccf;
+}
+
+.over-cad .box .formulario .input_item_salvar {
+  border-style: solid;
+  background-color: rgba(5, 157, 207, 0.486);
+  border-radius: 5px;
+  border-width: 0px;
+  outline: none;
+  height: 28px;
+}
+
+.over-cad .box .formulario .label_input {
+  color: #059ccf;
+}
+
+.over-cad .box .formulario #label-quant {
+  margin-top: 10px;
+}
+
+.over-cad .box .formulario .botoes_cadastro {
+  margin-top: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+}
+
+.over-cad .box .formulario .botoes_cadastro input:first-child {
+  margin-right: 10px;
+  background-color: red;
+}
+
+.over-cad .box .formulario .botoes_cadastro #botao_enviar, .over-cad .box .formulario .botoes_cadastro #botao_cencelar {
+  background-color: #48be74;
+  width: 100px;
+  outline: none;
+  border-style: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 3px 0px 3px 0px;
+}
+
+.over-cad .box .formulario .botoes_cadastro #botao_enviar:hover, .over-cad .box .formulario .botoes_cadastro #botao_cencelar:hover {
+  background-color: rgba(72, 190, 115, 0.788);
+}
+
+.over-cad .box #logo-agility {
+  width: 40%;
+}
+
+.over-saida {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.651);
+  display: none;
+  top: 0px;
+}
+
+.over-saida .box {
+  background-color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 2% 5% 2% 5%;
+  margin: 10% 10%;
+}
+
+.over-saida .box .formulario-saida {
+  background-color: white;
+  padding: 5px 5px 0px 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 30%;
+  border-style: solid;
+  border-radius: 20px;
+  border-color: #059ccf;
+}
+
+.over-saida .box .formulario-saida #sl-saida {
+  background-color: #48be74;
+  width: 100%;
+  margin-top: 5px;
+  outline: none;
+  border-style: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 3px 0px 3px 0px;
+}
+
+.over-saida .box .formulario-saida .input_item_saida {
+  border-style: solid;
+  background-color: rgba(5, 157, 207, 0.486);
+  border-radius: 5px;
+  border-width: 0px;
+  outline: none;
+  height: 28px;
+}
+
+.over-saida .box .formulario-saida .label_input {
+  color: #059ccf;
+}
+
+.over-saida .box .formulario-saida #label-quant-saida {
+  margin-top: 10px;
+}
+
+.over-saida .box .formulario-saida .botoes_saida {
+  background-color: white;
+  margin-top: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+}
+
+.over-saida .box .formulario-saida .botoes_saida input:first-child {
+  margin-right: 10px;
+}
+
+.over-saida .box .formulario-saida .botoes_saida #botao_enviar_saida, .over-saida .box .formulario-saida .botoes_saida #botao_cencelar_saida {
+  background-color: #48be74;
+  width: 100px;
+  outline: none;
+  border-style: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 3px 0px 3px 0px;
+}
+
+.over-saida .box .formulario-saida .botoes_saida #botao_enviar_saida:hover, .over-saida .box .formulario-saida .botoes_saida #botao_cencelar_saida:hover {
+  background-color: rgba(72, 190, 115, 0.788);
+}
+
+.over-saida .box #logo-agility-saida {
+  width: 40%;
+}
+
+.over_active {
+  display: block;
+}
+
+.switch__container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.switch__container p {
+  margin-left: 5px;
+}
+
+.switch {
+  visibility: hidden;
+  position: absolute;
+  margin-left: -9999px;
+}
+
+.switch + label {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.switch--shadow + label {
+  width: 40px;
+  height: 20px;
+  background-color: #dddddd;
+  border-radius: 100px;
+}
+
+.switch--shadow + label:before,
+.switch--shadow + label:after {
+  display: block;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  bottom: 1px;
+  content: "";
+  border-radius: 100%;
+}
+
+.switch--shadow + label:before {
+  right: 1px;
+  background-color: #f1f1f1;
+  border-radius: 10px;
+  -webkit-transition: background 0.4s;
+  transition: background 0.4s;
+}
+
+.switch--shadow + label:after {
+  width: 20px;
+  background-color: #fff;
+  border-radius: 100%;
+  -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
+}
+
+.switch--shadow:checked + label:before {
+  background-color: #8ce196;
+}
+
+.switch--shadow:checked + label:after {
+  -webkit-transform: translateX(19px);
+          transform: translateX(19px);
 }
 /*# sourceMappingURL=style.css.map */

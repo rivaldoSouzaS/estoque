@@ -1,0 +1,75 @@
+.dropdown {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 0;
+  padding: 15px 20px;
+  background-color: #48be74;
+}
+
+#titulo {
+  max-width: 90%;
+  margin: 0 auto;
+  text-align: center;
+  color: #028b9c;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.coluna {
+  background-color: rgba(96, 190, 72, 0.39);
+  font-size: 15px;
+  color: #028b9c;
+  padding: 5px 0px;
+}
+
+td {
+  color: #028b9c;
+  font-size: 20px;
+  padding-left: 5px;
+}
+
+#coluna_qtd {
+  width: 10%;
+}
+
+#coluna_nome {
+  width: 20%;
+}
+
+#coluna_desc {
+  width: 35%;
+}
+
+.contente_botoes {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  margin-bottom: 15px;
+  padding: 5px 0px 5px 0px;
+}
+
+.contente_botoes .input_item {
+  background-color: #48be74;
+  outline: none;
+  border-style: none;
+  border-radius: 5px;
+  width: 200px;
+  margin-left: 10px;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 3px 0px 3px 0px;
+}
+
+.contente_botoes .input_item:hover {
+  background-color: rgba(72, 190, 115, 0.788);
+}
+/*# sourceMappingURL=historico-style.css.map */

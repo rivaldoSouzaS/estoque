@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/historico-style.css" />
+    <link rel="stylesheet" href="css/print.css">
+    <title>Controle de Estoque</title>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul class="dropdown">
+          
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <div class="content">
+        <div id="titulo">
+          <h1>Controle de estoque Agility Telecom BJ</h1>
+        </div>
+        <div class="contente_botoes">
+          <select id="sl-relatorio-saida" class="input_item no-print" name="select">
+            <option id="" value="1" selected>Funcionario</option>
+          </select>
+          <input id="botao-gerar-relatorio" class="input_item no-print" type="button" value="Gerar relatorio">
+        </div>
+        <table class="table">
+          <header class="cabecalho">
+            <th id="coluna_nome" class="coluna">Nome</th>
+            <th id="coluna_desc" class="coluna">Desc</th>
+            <th id="coluna_ope" class="coluna">Operação</th>
+            <th id="coluna_qtd" class="coluna">Quant</th>
+            <th id="coluna_data" class="coluna">Data</th>
+          </header>
+          <tbody class="corpo_tabela_historico">
+            
+          </tbody>
+        </table>
+      </div>
+      
+    </main>
+
+    <script src="script/historico-script.js"></script>
+  </body>
+</html>
