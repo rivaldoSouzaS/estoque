@@ -39,6 +39,7 @@
         position: absolute;
         bottom: 115px;
         transform: translateX(-110%);
+
       }
       .dropdown__submenu--item {
         color: rgb(255, 255, 255);
@@ -89,10 +90,6 @@ td{
   color: rgb(2,139,156);
   font-size: 20px;
   padding-left: 5px;
-}
-
-#coluna_id, #coluna_qtd{
-  width: 15%;
 }
 
 
@@ -342,4 +339,8 @@ tr:nth-of-type(even) {
 }
 .switch--shadow:checked + label:after {
   transform: translateX(19px);
+}
+
+#operacao{
+  margin-left: 15px;
 }

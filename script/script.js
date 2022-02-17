@@ -5,38 +5,122 @@ let idDelecao;
 let quantidadeAntiga = 0;
 var regra = /^[0-9]+$/;
 
-db.transaction(function(banco){
-  banco.executeSql("SELECT * FROM item ORDER BY desc COLLATE NOCASE;",[], function(tx, resultado){
-    var rows = resultado.rows;
-    var tr = '';
-    for (let index = 0; index < rows.length; index++) {
-      tr += '<tr onClick="selecionar('+rows[index].id+')" id='+rows[index].id+'>';
-      tr += '<td>' + rows[index].id + '</td>';
-      tr += '<td>' + rows[index].desc + '</td>';
-      tr += '<td>' + rows[index].qtd + '</td>';
-      tr += '</tr>';
+//---------------------------------------------------------------- axios----------------------------------------------------------------------
+function salvar(descricao, fracao, quantidade){
+  axios.post('https://sheetdb.io/api/v1/f99viqo7fmto4',{
+    "data":{
+      "DESCRICAO": descricao,
+      "FRACAO": fracao,
+      "QUANTIDADE": quantidade
     }
-    tbody.innerHTML = tr;
-  });
-});
-
-function carregarTabela(){
-
-  db.transaction(function(banco){
-    banco.executeSql("SELECT * FROM item ORDER BY desc COLLATE NOCASE;",[], function(tx, resultado){
-      var rows = resultado.rows;
-      var tr = '';
-      for (let index = 0; index < rows.length; index++) {
-        tr += '<tr onClick="selecionar('+rows[index].id+')" id='+rows[index].id+'>';
-        tr += '<td>' + rows[index].id + '</td>';
-        tr += '<td>' + rows[index].desc + '</td>';
-        tr += '<td>' + rows[index].qtd + '</td>';
-        tr += '</tr>';
-      }
-      tbody.innerHTML = tr;
-    });
-  });
+  })
 }
+
+function salvarHistorico(nome, descricao, operacao, quantidade, data){
+  axios.post('https://sheetdb.io/api/v1/jj3wwgeziiiyf',{
+    "data":{
+      "NOME":nome,
+      "DESCRICAO": descricao,
+      "OPERACAO": operacao,
+      "QUANTIDADE": quantidade,
+      "DATA": data
+    }
+  })
+}
+
+function atualizarQtdItem(descricao, quantidade){
+  axios.patch(`https://sheetdb.io/api/v1/f99viqo7fmto4/DESCRICAO/${descricao}`,{
+    "data":{"QUANTIDADE": quantidade}
+  })
+  .then(resposta =>{
+    console.log(resposta.data)
+  })
+  .catch(err =>{
+    console.log(err);
+  })
+}
+
+
+
+function coletar(){
+  axios.get('https://sheetdb.io/api/v1/f99viqo7fmto4?sort_by=DESCRICAO&sort_order=asc')
+    .then(resposta =>{
+      //console.log(resposta.data)
+      carregarTabela(resposta.data)
+    })
+}
+
+function coletarDesc(descricao){
+  
+  axios.get(`https://sheetdb.io/api/v1/f99viqo7fmto4/search?DESCRICAO=${descricao}`)
+    .then(resposta =>{
+      
+      document.querySelector('#input_des').value = resposta.data[0].DESCRICAO;
+      document.querySelector('#input_frac').value = resposta.data[0].FRACAO;
+      document.querySelector('#input_qtd').value = resposta.data[0].QUANTIDADE;
+
+      quantidadeAntiga = resposta.data[0].QUANTIDADE;
+
+      console.log(quantidadeAntiga);
+    })
+    .catch(err =>{
+      console.log(err)
+    })
+}
+
+function atualizar(descricao, novaDescricao, fracao, quantidade){
+  axios.patch(`https://sheetdb.io/api/v1/f99viqo7fmto4/DESCRICAO/${descricao}`,{
+    "data":{
+      "DESCRICAO": novaDescricao,
+      "FRACAO": fracao,
+      "QUANTIDADE": quantidade
+    }
+  })
+  .then(resposta =>{
+    console.log(resposta.data)
+  })
+}
+
+function deletar(descricao){
+  axios.delete(`https://sheetdb.io/api/v1/f99viqo7fmto4/DESCRICAO/${descricao}`)
+  .then(resposta =>{
+    console.log(resposta.data)
+  })
+}
+//---------------------------------------------------------------- axios----------------------------------------------------------------------
+//carregarTabela();
+
+coletar()
+
+tbody.addEventListener('dblclick', evento =>{
+  //carregarSelect();
+  document.querySelector('#input_des_saida').value = idDelecao;
+  coletarDesc(idDelecao);
+  toggleFormSaida();
+})
+
+function carregarTabela(resultado){
+  var tr = '';
+  for (let index = 0; index < resultado.length; index++) {
+    tr += '<tr onClick="selecionar('+index+')" id='+index+'>';
+    tr += '<td>' + resultado[index].DESCRICAO + '</td>';
+    tr += '<td>' + resultado[index].FRACAO + '</td>';
+    tr += '<td>' + resultado[index].QUANTIDADE + '</td>';
+    tr += '</tr>';
+    //console.log("ok")
+  }
+  tbody.innerHTML = tr;
+}
+
+function selecionar(_id){
+  
+  desmarcarLinhasTabela()
+  var row = document.getElementById(_id);
+  row.style.backgroundColor = "rgba(96, 190, 72, 0.39)";
+  idDelecao = row.firstChild.textContent;
+  //console.log("opa "+idDelecao);
+}
+
 
 function buscarItem(id){
   db.transaction(function(banco){
@@ -62,16 +146,10 @@ function carregarSelect(){
   });
 }
 
-function selecionar(_id){
-  
-  desmarcarLinhasTabela()
-  var row = document.getElementById(_id);
-  row.style.backgroundColor = "rgba(96, 190, 72, 0.39)";
-  idDelecao = row.firstChild.textContent;
-}
 
 function desmarcarLinhasTabela(){
   for (let index = 0; index < tbody.rows.length; index++) {
+    
     tbody.rows[index].style.backgroundColor = "white";
   }
 }
@@ -79,15 +157,34 @@ function desmarcarLinhasTabela(){
 document.querySelector("#botao_enviar").addEventListener("click", (evento) => {
   var descricao = document.querySelector("#input_des").value;
   var quantidade = document.querySelector("#input_qtd").value;
+  var fracao = document.querySelector('#input_frac').value;
+  var tipoOperacao = document.querySelector('#botao_enviar').value;
 
-  if(quantidade != 0 && quantidade.match(regra) && descricao != ""){
-    db.transaction(function(banco){
-      banco.executeSql("insert into item(desc, qtd) values (?, ?);",[descricao, quantidade]);
-    });
-    alert("Salvo com sucesso");
+  if(tipoOperacao === "Salvar"){
+    if(quantidade != 0 && quantidade.match(regra) && descricao != ""){
+      try{
+        salvar(descricao, fracao, quantidade)
+        alert("Salvo com sucesso");
+      }catch(msg){
+        alert("Falha ao salvar");
+      }
+    }
+    else{
+      alert("Quantidade invalida");
+    }
   }
   else{
-    alert("Quantidade invalida");
+    if(quantidade != 0 && quantidade.match(regra) && descricao != ""){
+      try{
+        atualizar(idDelecao, descricao, fracao, quantidade)
+        alert("Editardo com sucesso");
+      }catch(msg){
+        alert("Falha ao Editar");
+      }
+    }
+    else{
+      alert("Quantidade invalida");
+    }
   }
 
   toggleForm();
@@ -97,7 +194,7 @@ document.querySelector("#botao_enviar").addEventListener("click", (evento) => {
 document.querySelector("#botao_enviar_saida").addEventListener("click", (evento) =>{
   
   var select = document.getElementById('sl-saida');
-  var idFuncionario = select.options[select.selectedIndex].value;
+  var nomeFuncionario = select.options[select.selectedIndex].text;
   var quant = document.getElementById("input_qtd_saida").value;
   var opera = document.getElementById("operacao").textContent;
   var currentTime = new Date();
@@ -108,46 +205,61 @@ document.querySelector("#botao_enviar_saida").addEventListener("click", (evento)
   if(quant != 0 && quant.match(regra)){
 
     if(valor){
-      let navaQuant = (parseInt(quantidadeAntiga) + parseInt(quant));
-      console.log("nova quant "+navaQuant+" antida "+quantidadeAntiga+" quantidade baixa "+quant);
-      buscarItem(idDelecao);
-      db.transaction(function(banco){
-        banco.executeSql('UPDATE item SET qtd=? WHERE id=?', [navaQuant, idDelecao ]);
-        console.log("update")
-      });
+    
+      let novaQuant = (parseInt(quantidadeAntiga)  + parseInt(quant) );
+      console.log('antiga '+quantidadeAntiga + ' atual '+quant+ ' nova '+novaQuant)
+      try{
+        atualizarQtdItem(idDelecao, novaQuant);
+      }
+      catch(err){
+        alert("Falha na operação")
+        return 0;
+      }
+      
     }
     else{
-      let navaQuant = (quantidadeAntiga - quant);
+      let novaQuant = (parseInt(quantidadeAntiga)  - parseInt(quant) );
+      console.log('antiga '+quantidadeAntiga + ' atual '+quant+ ' nova '+novaQuant)
+      try{
+        atualizarQtdItem(idDelecao, novaQuant)
+      }
+      catch(msg){
+        alert("Falha na operação")
+        return 0;
+      }
       
-      buscarItem(idDelecao);
-      db.transaction(function(banco){
-        banco.executeSql('UPDATE item SET qtd=? WHERE id=?', [navaQuant, idDelecao ]);
-        console.log("update")
-      });
     }
     
-  
-    db.transaction(function(banco){
-    
-      banco.executeSql("insert into historico(id_func, id_item, operacao, qtd, data) values (?, ?, ?, ?, ?);",[idFuncionario, idDelecao, opera, quant, currentTime]);
-      
-    });
-    
-    alert("Salvo com sucesso");
+    try{
+      salvarHistorico(nomeFuncionario, idDelecao, opera, quant, currentTime.toLocaleDateString());
+    }catch(msg){
+      alert("Falha ao salvar o historico")
+      return 0;
+    }
+      alert("Registro incluido com sucesso");
   }
   else{
     alert("Quantidade invalida");
   }
-  carregarTabela();
+  
   toggleFormSaida();
+  window.location.reload(true);
 });
 
 document.querySelector(".dropdown__submenu--item").addEventListener("click", (evento) => { //mesmo selecionando pela class so pela o primeiro elemento
   let acao = evento.target.textContent.trim().toLowerCase();
+  
   if(acao === "cadastrar"){
+    document.querySelector('#botao_enviar').value = "Salvar";
     toggleForm();
   }
 });
+
+document.querySelector('#id_editar').addEventListener("click", evento =>{
+  document.querySelector('#botao_enviar').value = "Editar";
+  coletarDesc(idDelecao);
+  toggleForm();
+})
 
 document.getElementById('switch-shadow').addEventListener('click', (event) =>{
   let valor  = document.getElementById('switch-shadow').checked;
@@ -162,11 +274,11 @@ document.getElementById('switch-shadow').addEventListener('click', (event) =>{
 
 /**
  * cadastrar uma saida
- */
+ *
 document.querySelector("#cadastrar").addEventListener("click", (evento) => { //mesmo selecionando pela class so pela o primeiro elemento
   let acao = evento.target.textContent.trim().toLowerCase();
   //console.log("opa");
-  console.log(idDelecao);
+  //console.log(idDelecao);
   if(idDelecao.match(regra) && idDelecao != 0 && typeof(idDelecao) !== 'undefined'){
     
     buscarItem(idDelecao);
@@ -178,16 +290,21 @@ document.querySelector("#cadastrar").addEventListener("click", (evento) => { //m
     alert("Escolha um item");
   }
 });
+*/
 
 document.querySelector("#id_deletar").addEventListener("click", (evento) => {
   var right = confirm("Deseja excluir o registro?");
   if (right){
-    db.transaction(function(tx) {
-      console.log(idDelecao);
-      tx.executeSql('DELETE FROM item WHERE id=?', [idDelecao.toString()]);
-    });
+    
+    try{
+      deletar(idDelecao.toString());
+      alert("Excluido com sucesso");
+    }
+    catch(msg){
+      alert("Falha ao excluir intem");
+    }
   }
-  carregarTabela();
+  coletar();
 });
 
 
@@ -212,3 +329,12 @@ function toggleFormSaida(){
 }
 
 
+
+//salvar("ONU", "UN", 20);
+//coletar();
+//coletarDesc("ONU");
+//atualizar("ONU", "ATUAL", "OPA", 0)
+//deletar("ATUAL");
+//salvar("BONINA FIBRA FIBERHOME", "MT", 100)
+
+//atualizarQtdItem("FIXA FIO FIX", 0);

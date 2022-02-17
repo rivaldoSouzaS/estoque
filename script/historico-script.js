@@ -1,7 +1,53 @@
 var db = openDatabase("BancoDeDados", 1.0, "estoque", 512);
 var tbody = document.querySelector(".corpo_tabela_historico");
-var idBusca;
+var meuSelect = document.querySelector('#sl-relatorio-saida')
 
+function coletar(){
+  axios.get('https://sheetdb.io/api/v1/jj3wwgeziiiyf?sort_by=NOME&sort_order=asc')
+    .then(resposta =>{
+      //console.log(resposta.data)
+      carregarTabela(resposta.data)
+    })
+}
+
+function coletarDesc(nomeFunc){
+  
+  axios.get(`https://sheetdb.io/api/v1/jj3wwgeziiiyf/search?NOME=${nomeFunc}`)
+    .then(resposta =>{
+      carregarTabela(resposta.data)
+    })
+    .catch(err =>{
+      console.log(err)
+    })
+}
+
+meuSelect.addEventListener('click',function(){
+  var select = document.getElementById('sl-relatorio-saida');
+  var nomeFunc = select.options[select.selectedIndex].text;
+  coletarDesc(nomeFunc);
+
+});
+
+
+function carregarTabela(resultado){
+  console.log("OK")
+  var tr = '';
+  for (let index = 0; index < resultado.length; index++) {
+    tr += '<tr onClick="selecionar('+index+')" id='+index+'>';
+    tr += '<td>' + resultado[index].NOME + '</td>';
+    tr += '<td>' + resultado[index].DESCRICAO + '</td>';
+    tr += '<td>' + resultado[index].OPERACAO + '</td>';
+    tr += '<td>' + resultado[index].QUANTIDADE + '</td>';
+    tr += '<td>' + resultado[index].DATA+ '</td>';
+    tr += '</tr>';
+    //console.log("ok")
+  }
+  tbody.innerHTML = tr;
+}
+
+coletar();
+
+/*
 var meuSelect = document.getElementById("sl-relatorio-saida");
 
 db.transaction(function(banco){
@@ -34,7 +80,7 @@ db.transaction(function(banco){
 
 
 meuSelect.addEventListener('click',function(){
-    console.log('OK')
+    
     var select = document.getElementById('sl-relatorio-saida');
     var idFuncionario = select.options[select.selectedIndex].value;
     console.log("opa "+idFuncionario);
@@ -56,8 +102,10 @@ meuSelect.addEventListener('click',function(){
     });
 });
 
+
+
+*/
+
 document.getElementById("botao-gerar-relatorio").addEventListener("click", (evento) => {
-    window.print();
+  window.print();
 });
-
-

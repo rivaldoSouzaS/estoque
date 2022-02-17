@@ -1,6 +1,4 @@
 .dropdown {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   margin: 0;
   padding: 15px 20px;
@@ -45,17 +43,11 @@ td {
 }
 
 .contente_botoes {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
+  flex-direction: row;
   margin-bottom: 15px;
   padding: 5px 0px 5px 0px;
 }
-
 .contente_botoes .input_item {
   background-color: #48be74;
   outline: none;
@@ -68,8 +60,6 @@ td {
   font-weight: bold;
   padding: 3px 0px 3px 0px;
 }
-
 .contente_botoes .input_item:hover {
   background-color: rgba(72, 190, 115, 0.788);
-}
-/*# sourceMappingURL=historico-style.css.map */
+}/*# sourceMappingURL=historico-style.css.map */
