@@ -3,7 +3,7 @@ var tbody = document.querySelector(".corpo_tabela_historico");
 var meuSelect = document.querySelector('#sl-relatorio-saida')
 
 function coletar(){
-  axios.get('https://sheetdb.io/api/v1/jj3wwgeziiiyf?sort_by=NOME&sort_order=asc')
+  axios.get('https://sheetdb.io/api/v1/jj3wwgeziiiyf')
     .then(resposta =>{
       //console.log(resposta.data)
       carregarTabela(resposta.data)

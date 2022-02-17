@@ -199,10 +199,19 @@ document.querySelector("#botao_enviar_saida").addEventListener("click", (evento)
   var opera = document.getElementById("operacao").textContent;
   var currentTime = new Date();
 
+  const formarter = Intl.DateTimeFormat('pt-BR',{
+    weekday:"long",
+    year:"numeric",
+    month:"short",
+    day:"numeric",
+    hour:"numeric",
+    minute:"numeric"
+  })
+
   let valor  = document.getElementById('switch-shadow').checked;
   //trabalhar esse metodo
   
-  if(quant != 0 && quant.match(regra)){
+  if(quant != 0 && quant.match(regra) && nomeFuncionario !== "Funcionario"){
 
     if(valor){
     
@@ -231,7 +240,7 @@ document.querySelector("#botao_enviar_saida").addEventListener("click", (evento)
     }
     
     try{
-      salvarHistorico(nomeFuncionario, idDelecao, opera, quant, currentTime.toLocaleDateString());
+      salvarHistorico(nomeFuncionario, idDelecao, opera, quant, formarter.format(currentTime));
     }catch(msg){
       alert("Falha ao salvar o historico")
       return 0;
@@ -239,7 +248,7 @@ document.querySelector("#botao_enviar_saida").addEventListener("click", (evento)
       alert("Registro incluido com sucesso");
   }
   else{
-    alert("Quantidade invalida");
+    alert("Campo invalido");
   }
   
   toggleFormSaida();
