@@ -274,10 +274,10 @@ document.getElementById('switch-shadow').addEventListener('click', (event) =>{
   let valor  = document.getElementById('switch-shadow').checked;
   console.log(valor);
   if(valor){
-    document.getElementById("operacao").innerText = "Entrada";
+    document.getElementById("operacao").innerText = "ENTRADA";
   }
   else{
-    document.getElementById("operacao").innerText = "Saida";
+    document.getElementById("operacao").innerText = "SAIDA";
   }
 })
 
@@ -336,6 +336,11 @@ function toggleFormSaida(){
   const formularioSaida = document.querySelector(".over-saida");
   formularioSaida.classList.toggle("over_active");
 }
+
+document.getElementById('relatorio').addEventListener("click", (evento) => {
+  window.print();
+});
+
 
 
 

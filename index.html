@@ -6,13 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/print.css">
     <title>Controle de Estoque</title>
   </head>
   <body>
     <header>
       <nav>
         <ul class="dropdown">
-          <li class="dropdown__item">
+          <li class="dropdown__item no-print">
             Arquivo
 
             <ul class="dropdown__submenu">
@@ -21,9 +22,11 @@
               <li id="id_editar" class="dropdown__submenu--item">Editar</li>
             </ul>
           </li>
-          <li class="dropdown__item item">
-            <a href="historico.html">Historico</a>
-            
+          <li class="dropdown__item item no-print">
+            <a href="historico.html">Histórico</a>
+          </li>
+          <li class="dropdown__item item no-print">
+            <a id="relatorio" href="historico.html">Relatório</a>
           </li>
           <!--
           <li id="cadastrar" class="dropdown__item item2">
