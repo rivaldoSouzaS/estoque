@@ -12,28 +12,31 @@
   <body>
     <header>
       <nav>
-        <ul class="dropdown">
-          <li class="dropdown__item no-print">
-            Arquivo
 
-            <ul class="dropdown__submenu">
-              <li class="dropdown__submenu--item">Cadastrar</li>
-              <li id="id_deletar" class="dropdown__submenu--item">Deletar</li>
-              <li id="id_editar" class="dropdown__submenu--item">Editar</li>
-            </ul>
-          </li>
-          <li class="dropdown__item item no-print">
-            <a href="historico.html">Histórico</a>
-          </li>
-          <li class="dropdown__item item no-print">
-            <a id="relatorio" href="historico.html">Relatório</a>
-          </li>
-          <!--
-          <li id="cadastrar" class="dropdown__item item2">
-            Operação
-          </li>
-          -->
-        </ul>
+        <div class="content-nav">
+          <ul class="dropdown">
+            <li class="dropdown__item no-print">
+              Arquivo
+  
+              <ul class="dropdown__submenu">
+                <li class="dropdown__submenu--item">Cadastrar</li>
+                <li id="id_deletar" class="dropdown__submenu--item">Deletar</li>
+                <li id="id_editar" class="dropdown__submenu--item">Editar</li>
+              </ul>
+            </li>
+            <li class="dropdown__item item no-print">
+              <a href="historico.html">Histórico</a>
+            </li>
+            <li class="dropdown__item item no-print">
+              <a id="relatorio" href="historico.html">Relatório</a>
+            </li>
+          </ul>
+
+          <div class="content-nav-search">
+            <input id="search" type="text">
+          </div>
+        </div>
+        
       </nav>
     </header>
 

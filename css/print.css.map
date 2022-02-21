@@ -1,1 +1,9 @@
-{"version":3,"sources":["../sass/print.scss"],"names":[],"mappings":"AACA;EACI;IACI,aAAA;EAAN;AACF","file":"print.css"}
+{
+    "version": 3,
+    "mappings": "AACA,MAAM,CAAC,KAAK;EACR,AAAA,SAAS,CAAA;IACL,OAAO,EAAE,IAAI;GAChB",
+    "sources": [
+        "../sass/print.scss"
+    ],
+    "names": [],
+    "file": "print.css"
+}

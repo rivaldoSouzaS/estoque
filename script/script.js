@@ -90,7 +90,7 @@ function deletar(descricao){
 //---------------------------------------------------------------- axios----------------------------------------------------------------------
 //carregarTabela();
 
-coletar()
+//coletar()
 
 tbody.addEventListener('dblclick', evento =>{
   //carregarSelect();
@@ -340,9 +340,6 @@ function toggleFormSaida(){
 document.getElementById('relatorio').addEventListener("click", (evento) => {
   window.print();
 });
-
-
-
 
 //salvar("ONU", "UN", 20);
 //coletar();
