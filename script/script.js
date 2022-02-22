@@ -5,9 +5,12 @@ let idDelecao;
 let quantidadeAntiga = 0;
 var regra = /^[0-9]+$/;
 
+const url = 'https://sheetdb.io/api/v1/f99viqo7fmto4'
+const urlH = 'https://sheetdb.io/api/v1/jj3wwgeziiiyf'
+
 //---------------------------------------------------------------- axios----------------------------------------------------------------------
 function salvar(descricao, fracao, quantidade){
-  axios.post('https://sheetdb.io/api/v1/f99viqo7fmto4',{
+  axios.post(url,{
     "data":{
       "DESCRICAO": descricao,
       "FRACAO": fracao,
@@ -17,7 +20,7 @@ function salvar(descricao, fracao, quantidade){
 }
 
 function salvarHistorico(nome, descricao, operacao, quantidade, data){
-  axios.post('https://sheetdb.io/api/v1/jj3wwgeziiiyf',{
+  axios.post(urlH,{
     "data":{
       "NOME":nome,
       "DESCRICAO": descricao,
@@ -29,7 +32,7 @@ function salvarHistorico(nome, descricao, operacao, quantidade, data){
 }
 
 function atualizarQtdItem(descricao, quantidade){
-  axios.patch(`https://sheetdb.io/api/v1/f99viqo7fmto4/DESCRICAO/${descricao}`,{
+  axios.patch(`${url}/DESCRICAO/${descricao}`,{
     "data":{"QUANTIDADE": quantidade}
   })
   .then(resposta =>{
@@ -40,10 +43,8 @@ function atualizarQtdItem(descricao, quantidade){
   })
 }
 
-
-
 function coletar(){
-  axios.get('https://sheetdb.io/api/v1/f99viqo7fmto4?sort_by=DESCRICAO&sort_order=asc')
+  axios.get(`${url}?sort_by=DESCRICAO&sort_order=asc`)
     .then(resposta =>{
       //console.log(resposta.data)
       carregarTabela(resposta.data)
@@ -52,7 +53,7 @@ function coletar(){
 
 function coletarDesc(descricao){
   
-  axios.get(`https://sheetdb.io/api/v1/f99viqo7fmto4/search?DESCRICAO=${descricao}`)
+  axios.get(`${url}/search?DESCRICAO=${descricao}`)
     .then(resposta =>{
       
       document.querySelector('#input_des').value = resposta.data[0].DESCRICAO;
@@ -69,7 +70,7 @@ function coletarDesc(descricao){
 }
 
 function atualizar(descricao, novaDescricao, fracao, quantidade){
-  axios.patch(`https://sheetdb.io/api/v1/f99viqo7fmto4/DESCRICAO/${descricao}`,{
+  axios.patch(`${url}/DESCRICAO/${descricao}`,{
     "data":{
       "DESCRICAO": novaDescricao,
       "FRACAO": fracao,
@@ -82,7 +83,7 @@ function atualizar(descricao, novaDescricao, fracao, quantidade){
 }
 
 function deletar(descricao){
-  axios.delete(`https://sheetdb.io/api/v1/f99viqo7fmto4/DESCRICAO/${descricao}`)
+  axios.delete(`${url}/DESCRICAO/${descricao}`)
   .then(resposta =>{
     console.log(resposta.data)
   })
@@ -340,6 +341,10 @@ function toggleFormSaida(){
 document.getElementById('relatorio').addEventListener("click", (evento) => {
   window.print();
 });
+
+document.querySelector('#buscar').addEventListener('click', (evento)=>{
+  console.log("ok")
+})
 
 //salvar("ONU", "UN", 20);
 //coletar();
