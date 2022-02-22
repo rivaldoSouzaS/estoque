@@ -90,7 +90,7 @@ function deletar(descricao){
 //---------------------------------------------------------------- axios----------------------------------------------------------------------
 //carregarTabela();
 
-//coletar()
+coletar()
 
 tbody.addEventListener('dblclick', evento =>{
   //carregarSelect();
