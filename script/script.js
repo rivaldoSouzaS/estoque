@@ -69,6 +69,24 @@ function coletarDesc(descricao){
     })
 }
 
+function coletarDescPart(descricao){
+  
+  axios.get(`${url}/search?DESCRICAO=${descricao}*`)
+    .then(resposta =>{
+      
+      document.querySelector('#input_des').value = resposta.data[0].DESCRICAO;
+      document.querySelector('#input_frac').value = resposta.data[0].FRACAO;
+      document.querySelector('#input_qtd').value = resposta.data[0].QUANTIDADE;
+
+      quantidadeAntiga = resposta.data[0].QUANTIDADE;
+
+      //console.log(resposta);
+    })
+    .catch(err =>{
+      console.log(err)
+    })
+}
+
 function atualizar(descricao, novaDescricao, fracao, quantidade){
   axios.patch(`${url}/DESCRICAO/${descricao}`,{
     "data":{
@@ -343,7 +361,8 @@ document.getElementById('relatorio').addEventListener("click", (evento) => {
 });
 
 document.querySelector('#buscar').addEventListener('click', (evento)=>{
-  console.log("ok")
+  const desc = document.querySelector('#search');
+  coletarDescPart(desc);
 })
 
 //salvar("ONU", "UN", 20);
