@@ -195,6 +195,29 @@ tr:nth-of-type(even) {
 .over-cad .box .formulario .botoes_cadastro #botao_enviar:hover, .over-cad .box .formulario .botoes_cadastro #botao_cencelar:hover {
   background-color: rgba(72, 190, 115, 0.788);
 }
+.over-cad .box .formulario .stepper {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+}
+.over-cad .box .formulario .stepper .input-spepper {
+  border: none;
+  background-color: rgba(5, 157, 207, 0.486);
+  height: 28px;
+  outline: none;
+  flex-grow: 1;
+}
+.over-cad .box .formulario .stepper .botoes {
+  color: white;
+  font-size: 30px;
+  height: 30px;
+}
+.over-cad .box .formulario .stepper #somar {
+  border-radius: 0px 5px 5px 0px;
+}
+.over-cad .box .formulario .stepper #sub {
+  border-radius: 5px 0px 0px 5px;
+}
 .over-cad .box #logo-agility {
   width: 40%;
 }

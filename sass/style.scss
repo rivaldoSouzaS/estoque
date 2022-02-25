@@ -221,6 +221,36 @@ tr:nth-of-type(even) {
           
         }
       }
+      //stepper
+
+      .stepper{
+        display: flex;
+        justify-content: center;
+        align-items: stretch;
+
+        .input-spepper{
+          border: none;
+          background-color: rgba(5, 157, 207, 0.486);
+          height: 28px;
+          outline: none;
+          flex-grow: 1;
+        }
+
+        .botoes{
+          color: white;
+          font-size: 30px;
+          height: 30px;
+        }
+
+        #somar{
+          border-radius: 0px 5px 5px 0px;
+        }
+
+        #sub{
+          border-radius: 5px 0px 0px 5px;
+        }
+      }
+      //stepper
     }
 
     #logo-agility{

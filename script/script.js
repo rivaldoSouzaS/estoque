@@ -3,6 +3,7 @@ var tbody = document.querySelector(".corpo_tabela");
 var db = openDatabase("BancoDeDados", 1.0, "estoque", 512);
 let idDelecao;
 let quantidadeAntiga = 0;
+let quantidadeMinima = document.getElementById('input_mim')
 var regra = /^[0-9]+$/;
 
 const url = 'https://sheetdb.io/api/v1/f99viqo7fmto4'
@@ -109,7 +110,7 @@ function deletar(descricao){
 //---------------------------------------------------------------- axios----------------------------------------------------------------------
 //carregarTabela();
 
-coletar()
+//coletar()
 
 tbody.addEventListener('dblclick', evento =>{
   //carregarSelect();
@@ -363,6 +364,19 @@ document.getElementById('relatorio').addEventListener("click", (evento) => {
 document.querySelector('#buscar').addEventListener('click', (evento)=>{
   const desc = document.querySelector('#search');
   coletarDescPart(desc);
+})
+
+document.getElementById('somar').addEventListener('click', (evento)=>{
+  console.log(evento.button)
+  let val = quantidadeMinima.getAttribute("value")
+  let newVal  = (parseInt(val) + 1)
+  quantidadeMinima.setAttribute("value", newVal)
+})
+
+document.getElementById('sub').addEventListener('click', (evento)=>{
+  let val = quantidadeMinima.getAttribute("value")
+  let newVal  = (parseInt(val) - 1)
+  quantidadeMinima.setAttribute("value", newVal)
 })
 
 //salvar("ONU", "UN", 20);

@@ -50,7 +50,9 @@
           <header class="cabecalho">
             <th id="coluna_desc" class="coluna">Descrição</th>
             <th id="coluna_frac" class="coluna">Fração</th>
+            <th id="coluna_min" class="coluna">Estoque min</th>
             <th id="coluna_qtd" class="coluna">Quant</th>
+            <th id="coluna_repo" class="coluna">Reposição</th>
           </header>
           <tbody class="corpo_tabela">
             
@@ -67,9 +69,17 @@
                 <label for="frac" class="label_input">Fração</label>
                 <input id="input_frac" type="frac" autocomplete="off" name="desc" class="input_item_salvar">
 
+                <label id="label-mim" for="mim" class="label_input">Quant. Minina</label>
+
+                <div class="stepper">
+                  <input id="sub" type="button" value="-" class="input-spepper botoes">
+                  <input id="input_mim" type="number" value="0" autocomplete="off" name="mim" class="input-spepper" readonly>
+                  <input id="somar" type="button" value="+" class="input-spepper botoes">
+                </div>
+
                 <label id="label-quant" for="quant" class="label_input">Quantidade</label>
                 <input id="input_qtd" type="quant" autocomplete="off" name="quant" class="input_item_salvar">
-
+                  
                 <div class="botoes_cadastro">
                   <input id="botao_enviar" type="button" value="Enviar">
                   <input id="botao_cencelar" type="button" value="Cencelar">
