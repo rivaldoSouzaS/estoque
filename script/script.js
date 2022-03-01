@@ -6,17 +6,34 @@ let quantidadeAntiga = 0;
 let quantidadeMinima = document.getElementById('input_mim')
 var regra = /^[0-9]+$/;
 
-const url = 'https://sheetdb.io/api/v1/f99viqo7fmto4'
+const url = 'https://sheetdb.io/api/v1/db3oydpcb9aaz'
 const urlH = 'https://sheetdb.io/api/v1/jj3wwgeziiiyf'
 
 //---------------------------------------------------------------- axios----------------------------------------------------------------------
-function salvar(descricao, fracao, quantidade){
+function salvar(descricao, fracao, minimo, quantidade, reposicao){
   axios.post(url,{
     "data":{
       "DESCRICAO": descricao,
       "FRACAO": fracao,
-      "QUANTIDADE": quantidade
+      "MIN": minimo,
+      "QUANTIDADE": quantidade,
+      "REPO": reposicao
     }
+  })
+}
+
+function atualizar(descricao, novaDescricao, fracao, minimo, quantidade, reposicao){
+  axios.patch(`${url}/DESCRICAO/${descricao}`,{
+    "data":{
+      "DESCRICAO": novaDescricao,
+      "FRACAO": fracao,
+      "MIN": minimo,
+      "QUANTIDADE": quantidade,
+      "REPO": reposicao
+    }
+  })
+  .then(resposta =>{
+    console.log(resposta.data)
   })
 }
 
@@ -88,19 +105,6 @@ function coletarDescPart(descricao){
     })
 }
 
-function atualizar(descricao, novaDescricao, fracao, quantidade){
-  axios.patch(`${url}/DESCRICAO/${descricao}`,{
-    "data":{
-      "DESCRICAO": novaDescricao,
-      "FRACAO": fracao,
-      "QUANTIDADE": quantidade
-    }
-  })
-  .then(resposta =>{
-    console.log(resposta.data)
-  })
-}
-
 function deletar(descricao){
   axios.delete(`${url}/DESCRICAO/${descricao}`)
   .then(resposta =>{
@@ -110,7 +114,7 @@ function deletar(descricao){
 //---------------------------------------------------------------- axios----------------------------------------------------------------------
 //carregarTabela();
 
-//coletar()
+coletar()
 
 tbody.addEventListener('dblclick', evento =>{
   //carregarSelect();
@@ -125,7 +129,9 @@ function carregarTabela(resultado){
     tr += '<tr onClick="selecionar('+index+')" id='+index+'>';
     tr += '<td>' + resultado[index].DESCRICAO + '</td>';
     tr += '<td>' + resultado[index].FRACAO + '</td>';
+    tr += '<td>' + resultado[index].MIN + '</td>';
     tr += '<td>' + resultado[index].QUANTIDADE + '</td>';
+    tr += '<td>' + resultado[index].REPO + '</td>';
     tr += '</tr>';
     //console.log("ok")
   }
@@ -179,11 +185,14 @@ document.querySelector("#botao_enviar").addEventListener("click", (evento) => {
   var quantidade = document.querySelector("#input_qtd").value;
   var fracao = document.querySelector('#input_frac').value;
   var tipoOperacao = document.querySelector('#botao_enviar').value;
+  var minimo = document.querySelector('#input_mim').value;
+  var reposicao = (quantidade - minimo);
 
   if(tipoOperacao === "Salvar"){
     if(quantidade != 0 && quantidade.match(regra) && descricao != ""){
       try{
-        salvar(descricao, fracao, quantidade)
+        salvar(descricao, fracao, minimo, quantidade, reposicao)
+        //console.log(minimo, reposicao)
         alert("Salvo com sucesso");
       }catch(msg){
         alert("Falha ao salvar");
@@ -196,7 +205,8 @@ document.querySelector("#botao_enviar").addEventListener("click", (evento) => {
   else{
     if(quantidade != 0 && quantidade.match(regra) && descricao != ""){
       try{
-        atualizar(idDelecao, descricao, fracao, quantidade)
+        reposicao = (quantidade - minimo)
+        atualizar(idDelecao, descricao, fracao, minimo, quantidade, reposicao)
         alert("Editardo com sucesso");
       }catch(msg){
         alert("Falha ao Editar");
