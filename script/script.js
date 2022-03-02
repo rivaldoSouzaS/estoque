@@ -49,9 +49,12 @@ function salvarHistorico(nome, descricao, operacao, quantidade, data){
   })
 }
 
-function atualizarQtdItem(descricao, quantidade){
-  axios.patch(`${url}/DESCRICAO/${descricao}`,{
-    "data":{"QUANTIDADE": quantidade}
+function atualizarQtdItem(id, quantidade, reposicao){
+  axios.patch(`${url}/ID/${id}`,{
+    "data":{
+      "QUANTIDADE": quantidade,
+      "REPO": reposicao
+    }
   })
   .then(resposta =>{
     console.log(resposta.data)
@@ -107,6 +110,7 @@ function coletarDescPart(descricao){
       
 
       quantidadeAntiga = resposta.data[0].QUANTIDADE;
+      
 
       //console.log(resposta);
     })
@@ -126,16 +130,21 @@ function deletar(descricao){
 
 coletar()
 
-const mostrarMerda = async ()=>{
-  const bosta = await geyById(idDelecao);
-  console.log(bosta[0].DESCRICAO);
+const setarDados = async ()=>{
+  const resposta = await geyById(idDelecao);
+  //console.log(resposta[0].DESCRICAO);
+  document.querySelector('#input_des').value = resposta[0].DESCRICAO;
+  document.querySelector('#input_frac').value = resposta[0].FRACAO;
+  document.querySelector('#input_qtd').value = resposta[0].QUANTIDADE;
+  document.querySelector('#input_des_saida').value = resposta[0].DESCRICAO;
+  quantidadeAntiga = resposta[0].QUANTIDADE;
+  quantidadeMinima = resposta[0].MIN;
+  
 }
 
 tbody.addEventListener('dblclick', evento =>{
 
-  mostrarMerda();
-  document.querySelector('#input_des_saida').value = idDelecao;
-  coletarDesc(idDelecao);
+  setarDados();
   toggleFormSaida();
 })
 
@@ -240,6 +249,7 @@ document.querySelector("#botao_enviar_saida").addEventListener("click", (evento)
   var select = document.getElementById('sl-saida');
   var nomeFuncionario = select.options[select.selectedIndex].text;
   var quant = document.getElementById("input_qtd_saida").value;
+  var desc = document.getElementById('input_des_saida').value;
   var opera = document.getElementById("operacao").textContent;
   var currentTime = new Date();
 
@@ -260,9 +270,10 @@ document.querySelector("#botao_enviar_saida").addEventListener("click", (evento)
     if(valor){
     
       let novaQuant = (parseInt(quantidadeAntiga)  + parseInt(quant) );
+      let reposicao = (novaQuant - quantidadeMinima);
       console.log('antiga '+quantidadeAntiga + ' atual '+quant+ ' nova '+novaQuant)
       try{
-        atualizarQtdItem(idDelecao, novaQuant);
+        atualizarQtdItem(idDelecao, novaQuant, reposicao);
       }
       catch(err){
         alert("Falha na operação")
@@ -272,9 +283,10 @@ document.querySelector("#botao_enviar_saida").addEventListener("click", (evento)
     }
     else{
       let novaQuant = (parseInt(quantidadeAntiga)  - parseInt(quant) );
+      let reposicao = (novaQuant - quantidadeMinima);
       console.log('antiga '+quantidadeAntiga + ' atual '+quant+ ' nova '+novaQuant)
       try{
-        atualizarQtdItem(idDelecao, novaQuant)
+        atualizarQtdItem(idDelecao, novaQuant, reposicao)
       }
       catch(msg){
         alert("Falha na operação")
@@ -284,7 +296,7 @@ document.querySelector("#botao_enviar_saida").addEventListener("click", (evento)
     }
     
     try{
-      salvarHistorico(nomeFuncionario, idDelecao, opera, quant, formarter.format(currentTime));
+      salvarHistorico(nomeFuncionario, desc, opera, quant, formarter.format(currentTime));
     }catch(msg){
       alert("Falha ao salvar o historico")
       return 0;
@@ -386,7 +398,6 @@ document.getElementById('relatorio').addEventListener("click", (evento) => {
 
 document.querySelector('#buscar').addEventListener('click', (evento)=>{
   const desc = document.querySelector('#search');
-  coletarDescPart(desc);
 })
 
 const randomId = len =>{
