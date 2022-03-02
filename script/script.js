@@ -87,6 +87,14 @@ function coletarDesc(descricao){
       console.log(err)
     })
 }
+/**
+ * Metodo do tipo errow function novo
+ * @param {descrição} desc 
+ */
+const geyById = async(id)=>{
+  const result = await axios.get(`${url}/search?ID=${id}`);
+  return result.data;
+}
 
 function coletarDescPart(descricao){
   
@@ -118,8 +126,14 @@ function deletar(descricao){
 
 coletar()
 
+const mostrarMerda = async ()=>{
+  const bosta = await geyById(idDelecao);
+  console.log(bosta[0].DESCRICAO);
+}
+
 tbody.addEventListener('dblclick', evento =>{
-  //carregarSelect();
+
+  mostrarMerda();
   document.querySelector('#input_des_saida').value = idDelecao;
   coletarDesc(idDelecao);
   toggleFormSaida();
