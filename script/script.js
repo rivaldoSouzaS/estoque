@@ -1,5 +1,4 @@
 var tbody = document.querySelector(".corpo_tabela");
-//var descricao = "";
 var db = openDatabase("BancoDeDados", 1.0, "estoque", 512);
 let idDelecao;
 let quantidadeAntiga = 0;
@@ -10,9 +9,10 @@ const url = 'https://sheetdb.io/api/v1/db3oydpcb9aaz'
 const urlH = 'https://sheetdb.io/api/v1/jj3wwgeziiiyf'
 
 //---------------------------------------------------------------- axios----------------------------------------------------------------------
-function salvar(descricao, fracao, minimo, quantidade, reposicao){
+function salvar(id, descricao, fracao, minimo, quantidade, reposicao){
   axios.post(url,{
     "data":{
+      "ID": id,
       "DESCRICAO": descricao,
       "FRACAO": fracao,
       "MIN": minimo,
@@ -23,7 +23,7 @@ function salvar(descricao, fracao, minimo, quantidade, reposicao){
 }
 
 function atualizar(descricao, novaDescricao, fracao, minimo, quantidade, reposicao){
-  axios.patch(`${url}/DESCRICAO/${descricao}`,{
+  axios.patch(`${url}/ID/${descricao}`,{
     "data":{
       "DESCRICAO": novaDescricao,
       "FRACAO": fracao,
@@ -71,12 +71,13 @@ function coletar(){
 
 function coletarDesc(descricao){
   
-  axios.get(`${url}/search?DESCRICAO=${descricao}`)
+  axios.get(`${url}/search?ID=${descricao}`)
     .then(resposta =>{
       
       document.querySelector('#input_des').value = resposta.data[0].DESCRICAO;
       document.querySelector('#input_frac').value = resposta.data[0].FRACAO;
       document.querySelector('#input_qtd').value = resposta.data[0].QUANTIDADE;
+      quantidadeMinima.setAttribute("value", parseInt(resposta.data[0].MIN));
 
       quantidadeAntiga = resposta.data[0].QUANTIDADE;
 
@@ -95,6 +96,7 @@ function coletarDescPart(descricao){
       document.querySelector('#input_des').value = resposta.data[0].DESCRICAO;
       document.querySelector('#input_frac').value = resposta.data[0].FRACAO;
       document.querySelector('#input_qtd').value = resposta.data[0].QUANTIDADE;
+      
 
       quantidadeAntiga = resposta.data[0].QUANTIDADE;
 
@@ -106,7 +108,7 @@ function coletarDescPart(descricao){
 }
 
 function deletar(descricao){
-  axios.delete(`${url}/DESCRICAO/${descricao}`)
+  axios.delete(`${url}/ID/${descricao}`)
   .then(resposta =>{
     console.log(resposta.data)
   })
@@ -127,13 +129,13 @@ function carregarTabela(resultado){
   var tr = '';
   for (let index = 0; index < resultado.length; index++) {
     tr += '<tr onClick="selecionar('+index+')" id='+index+'>';
+    tr += '<td>' + resultado[index].ID + '</td>';
     tr += '<td>' + resultado[index].DESCRICAO + '</td>';
     tr += '<td>' + resultado[index].FRACAO + '</td>';
     tr += '<td>' + resultado[index].MIN + '</td>';
     tr += '<td>' + resultado[index].QUANTIDADE + '</td>';
     tr += '<td>' + resultado[index].REPO + '</td>';
     tr += '</tr>';
-    //console.log("ok")
   }
   tbody.innerHTML = tr;
 }
@@ -146,7 +148,6 @@ function selecionar(_id){
   idDelecao = row.firstChild.textContent;
   //console.log("opa "+idDelecao);
 }
-
 
 function buscarItem(id){
   db.transaction(function(banco){
@@ -172,7 +173,6 @@ function carregarSelect(){
   });
 }
 
-
 function desmarcarLinhasTabela(){
   for (let index = 0; index < tbody.rows.length; index++) {
     
@@ -181,18 +181,18 @@ function desmarcarLinhasTabela(){
 }
 
 document.querySelector("#botao_enviar").addEventListener("click", (evento) => {
-  var descricao = document.querySelector("#input_des").value;
+  var descricao = document.querySelector("#input_des").value.toUpperCase();
   var quantidade = document.querySelector("#input_qtd").value;
-  var fracao = document.querySelector('#input_frac').value;
+  var fracao = document.querySelector('#input_frac').value.toUpperCase();
   var tipoOperacao = document.querySelector('#botao_enviar').value;
   var minimo = document.querySelector('#input_mim').value;
   var reposicao = (quantidade - minimo);
+  var id = randomId(5).toUpperCase();
 
   if(tipoOperacao === "Salvar"){
     if(quantidade != 0 && quantidade.match(regra) && descricao != ""){
       try{
-        salvar(descricao, fracao, minimo, quantidade, reposicao)
-        //console.log(minimo, reposicao)
+        salvar(id, descricao, fracao, minimo, quantidade, reposicao)
         alert("Salvo com sucesso");
       }catch(msg){
         alert("Falha ao salvar");
@@ -346,7 +346,6 @@ document.querySelector("#id_deletar").addEventListener("click", (evento) => {
   coletar();
 });
 
-
 //aqui
 
 document.querySelector("#botao_cencelar").addEventListener("click", (evento) =>{
@@ -376,15 +375,26 @@ document.querySelector('#buscar').addEventListener('click', (evento)=>{
   coletarDescPart(desc);
 })
 
+const randomId = len =>{
+  let id = ''
+  do{
+    id += Math.random().toString(36).substring(2)
+  }while(id.length < len)
+  id = id.substring(0, len)
+  return id
+}
+
 document.getElementById('somar').addEventListener('click', (evento)=>{
-  console.log(evento.button)
   let val = quantidadeMinima.getAttribute("value")
+  console.log("valor "+val)
   let newVal  = (parseInt(val) + 1)
   quantidadeMinima.setAttribute("value", newVal)
+  //console.log(randomId(5));
 })
 
 document.getElementById('sub').addEventListener('click', (evento)=>{
   let val = quantidadeMinima.getAttribute("value")
+  console.log("valor "+val)
   let newVal  = (parseInt(val) - 1)
   quantidadeMinima.setAttribute("value", newVal)
 })
