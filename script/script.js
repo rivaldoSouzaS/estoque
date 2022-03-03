@@ -1,8 +1,7 @@
 var tbody = document.querySelector(".corpo_tabela");
-var db = openDatabase("BancoDeDados", 1.0, "estoque", 512);
+var quantidadeMinima = document.getElementById('input_mim');
 let idDelecao;
 let quantidadeAntiga = 0;
-let quantidadeMinima = document.getElementById('input_mim')
 var regra = /^[0-9]+$/;
 
 const url = 'https://sheetdb.io/api/v1/db3oydpcb9aaz'
@@ -64,40 +63,20 @@ function atualizarQtdItem(id, quantidade, reposicao){
   })
 }
 
-function coletar(){
-  axios.get(`${url}?sort_by=DESCRICAO&sort_order=asc`)
-    .then(resposta =>{
-      //console.log(resposta.data)
-      carregarTabela(resposta.data)
-    })
+const coletar = async()=>{
+  const result = await axios.get(`${url}?sort_by=DESCRICAO&sort_order=asc`);
+  return result.data;
 }
 
-function coletarDesc(descricao){
-  
-  axios.get(`${url}/search?ID=${descricao}`)
-    .then(resposta =>{
-      
-      document.querySelector('#input_des').value = resposta.data[0].DESCRICAO;
-      document.querySelector('#input_frac').value = resposta.data[0].FRACAO;
-      document.querySelector('#input_qtd').value = resposta.data[0].QUANTIDADE;
-      quantidadeMinima.setAttribute("value", parseInt(resposta.data[0].MIN));
-
-      quantidadeAntiga = resposta.data[0].QUANTIDADE;
-
-      console.log(quantidadeAntiga);
-    })
-    .catch(err =>{
-      console.log(err)
-    })
-}
 /**
  * Metodo do tipo errow function novo
- * @param {descrição} desc 
+ * @param {id} id 
  */
-const geyById = async(id)=>{
+ const geyById = async(id)=>{
   const result = await axios.get(`${url}/search?ID=${id}`);
   return result.data;
 }
+
 
 function coletarDescPart(descricao){
   
@@ -126,20 +105,18 @@ function deletar(descricao){
   })
 }
 //---------------------------------------------------------------- axios----------------------------------------------------------------------
-//carregarTabela();
+carregarTabela();
 
-coletar()
+//coletar()
 
 const setarDados = async ()=>{
   const resposta = await geyById(idDelecao);
-  //console.log(resposta[0].DESCRICAO);
   document.querySelector('#input_des').value = resposta[0].DESCRICAO;
   document.querySelector('#input_frac').value = resposta[0].FRACAO;
   document.querySelector('#input_qtd').value = resposta[0].QUANTIDADE;
   document.querySelector('#input_des_saida').value = resposta[0].DESCRICAO;
+  quantidadeMinima.setAttribute('value', resposta[0].MIN);
   quantidadeAntiga = resposta[0].QUANTIDADE;
-  quantidadeMinima = resposta[0].MIN;
-  
 }
 
 tbody.addEventListener('dblclick', evento =>{
@@ -148,7 +125,9 @@ tbody.addEventListener('dblclick', evento =>{
   toggleFormSaida();
 })
 
-function carregarTabela(resultado){
+async function carregarTabela(){
+  const resultado = await coletar();
+  console.log(resultado.length);
   var tr = '';
   for (let index = 0; index < resultado.length; index++) {
     tr += '<tr onClick="selecionar('+index+')" id='+index+'>';
@@ -163,37 +142,13 @@ function carregarTabela(resultado){
   tbody.innerHTML = tr;
 }
 
+
 function selecionar(_id){
   
   desmarcarLinhasTabela()
   var row = document.getElementById(_id);
   row.style.backgroundColor = "rgba(96, 190, 72, 0.39)";
   idDelecao = row.firstChild.textContent;
-  //console.log("opa "+idDelecao);
-}
-
-function buscarItem(id){
-  db.transaction(function(banco){
-    banco.executeSql("SELECT i.desc, i.qtd FROM item i where id=?;",[id.toString()], function(tx, resultado){
-      var row = resultado.rows;
-      document.getElementById("input_des_saida").value = row[0].desc;
-      quantidadeAntiga = row[0].qtd;
-    });
-  });
-}
-
-function carregarSelect(){
-  var meuSelect = document.getElementById("sl-saida");
-  db.transaction(function(banco){
-    banco.executeSql("SELECT * FROM funcionario;",[], function(tx, resultado){
-      var rows = resultado.rows;
-      var op = '';
-      for (let index = 0; index < rows.length; index++) {
-        op += '<option id='+rows[index].id+' value='+rows[index].id+' selected>'+rows[index].nome+'</option>';
-      }
-      meuSelect.innerHTML = op;
-    });
-  });
 }
 
 function desmarcarLinhasTabela(){
@@ -270,7 +225,7 @@ document.querySelector("#botao_enviar_saida").addEventListener("click", (evento)
     if(valor){
     
       let novaQuant = (parseInt(quantidadeAntiga)  + parseInt(quant) );
-      let reposicao = (novaQuant - quantidadeMinima);
+      let reposicao = (novaQuant - parseInt(quantidadeMinima.value));
       console.log('antiga '+quantidadeAntiga + ' atual '+quant+ ' nova '+novaQuant)
       try{
         atualizarQtdItem(idDelecao, novaQuant, reposicao);
@@ -283,7 +238,7 @@ document.querySelector("#botao_enviar_saida").addEventListener("click", (evento)
     }
     else{
       let novaQuant = (parseInt(quantidadeAntiga)  - parseInt(quant) );
-      let reposicao = (novaQuant - quantidadeMinima);
+      let reposicao = (novaQuant - parseInt(quantidadeMinima.value));
       console.log('antiga '+quantidadeAntiga + ' atual '+quant+ ' nova '+novaQuant)
       try{
         atualizarQtdItem(idDelecao, novaQuant, reposicao)
@@ -322,7 +277,7 @@ document.querySelector(".dropdown__submenu--item").addEventListener("click", (ev
 
 document.querySelector('#id_editar').addEventListener("click", evento =>{
   document.querySelector('#botao_enviar').value = "Editar";
-  coletarDesc(idDelecao);
+  setarDados();
   toggleForm();
 })
 
@@ -336,26 +291,6 @@ document.getElementById('switch-shadow').addEventListener('click', (event) =>{
     document.getElementById("operacao").innerText = "SAIDA";
   }
 })
-
-/**
- * cadastrar uma saida
- *
-document.querySelector("#cadastrar").addEventListener("click", (evento) => { //mesmo selecionando pela class so pela o primeiro elemento
-  let acao = evento.target.textContent.trim().toLowerCase();
-  //console.log("opa");
-  //console.log(idDelecao);
-  if(idDelecao.match(regra) && idDelecao != 0 && typeof(idDelecao) !== 'undefined'){
-    
-    buscarItem(idDelecao);
-    
-    carregarSelect();
-    toggleFormSaida();
-  }
-  else{
-    alert("Escolha um item");
-  }
-});
-*/
 
 document.querySelector("#id_deletar").addEventListener("click", (evento) => {
   var right = confirm("Deseja excluir o registro?");
@@ -411,15 +346,14 @@ const randomId = len =>{
 
 document.getElementById('somar').addEventListener('click', (evento)=>{
   let val = quantidadeMinima.getAttribute("value")
-  console.log("valor "+val)
+  //console.log("valor "+val)
   let newVal  = (parseInt(val) + 1)
   quantidadeMinima.setAttribute("value", newVal)
-  //console.log(randomId(5));
 })
 
 document.getElementById('sub').addEventListener('click', (evento)=>{
   let val = quantidadeMinima.getAttribute("value")
-  console.log("valor "+val)
+  //console.log("valor "+val)
   let newVal  = (parseInt(val) - 1)
   quantidadeMinima.setAttribute("value", newVal)
 })
@@ -430,5 +364,3 @@ document.getElementById('sub').addEventListener('click', (evento)=>{
 //atualizar("ONU", "ATUAL", "OPA", 0)
 //deletar("ATUAL");
 //salvar("BONINA FIBRA FIBERHOME", "MT", 100)
-
-//atualizarQtdItem("FIXA FIO FIX", 0);
