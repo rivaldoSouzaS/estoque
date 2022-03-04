@@ -77,21 +77,12 @@ const coletar = async()=>{
   return result.data;
 }
 
-
 function coletarDescPart(descricao){
   
-  axios.get(`${url}/search?DESCRICAO=${descricao}*`)
+  axios.get(url+"/search?DESCRICAO="+descricao+"*")
     .then(resposta =>{
-      
-      document.querySelector('#input_des').value = resposta.data[0].DESCRICAO;
-      document.querySelector('#input_frac').value = resposta.data[0].FRACAO;
-      document.querySelector('#input_qtd').value = resposta.data[0].QUANTIDADE;
-      
 
-      quantidadeAntiga = resposta.data[0].QUANTIDADE;
-      
-
-      //console.log(resposta);
+      console.log(resposta);
     })
     .catch(err =>{
       console.log(err)
@@ -141,7 +132,6 @@ async function carregarTabela(){
   }
   tbody.innerHTML = tr;
 }
-
 
 function selecionar(_id){
   
@@ -332,7 +322,10 @@ document.getElementById('relatorio').addEventListener("click", (evento) => {
 });
 
 document.querySelector('#buscar').addEventListener('click', (evento)=>{
-  const desc = document.querySelector('#search');
+  const desc = document.querySelector('#search').value;
+  console.log(desc);
+  coletarDescPart(desc);
+  
 })
 
 const randomId = len =>{
