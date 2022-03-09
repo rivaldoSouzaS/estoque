@@ -148,6 +148,14 @@ function desmarcarLinhasTabela(){
   }
 }
 
+/*
+async function teste(){
+  console.log("merda ok")
+}
+
+document.querySelector('#botao_enviar').addEventListener('click', teste);
+*/
+
 document.querySelector("#botao_enviar").addEventListener("click", (evento) => {
   var descricao = document.querySelector("#input_des").value.toUpperCase();
   var quantidade = document.querySelector("#input_qtd").value;
