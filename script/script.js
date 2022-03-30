@@ -65,30 +65,37 @@ function atualizarQtdItem(id, quantidade, reposicao){
 
 const coletar = async()=>{
   const result = await axios.get(`${url}?sort_by=DESCRICAO&sort_order=asc`);
-  return result.data;
+  carregarTabela(result)
+  //return result.data;
+}
+
+const coletarDescPart = async (descricao) =>{
+  const result = await axios.get(url+"/search?DESCRICAO="+descricao+"*");
+  carregarTabela(result)
 }
 
 /**
  * Metodo do tipo errow function novo
  * @param {id} id 
  */
- const geyById = async(id)=>{
+const geyById = async(id)=>{
   const result = await axios.get(`${url}/search?ID=${id}`);
   return result.data;
 }
 
+/*
 function coletarDescPart(descricao){
   
   axios.get(url+"/search?DESCRICAO="+descricao+"*")
     .then(resposta =>{
-
-      console.log(resposta);
+      console.log(resposta)
+      carregarTabela(resposta.data)
     })
     .catch(err =>{
       console.log(err)
     })
 }
-
+*/
 function deletar(descricao){
   axios.delete(`${url}/ID/${descricao}`)
   .then(resposta =>{
@@ -96,9 +103,7 @@ function deletar(descricao){
   })
 }
 //---------------------------------------------------------------- axios----------------------------------------------------------------------
-carregarTabela();
-
-//coletar()
+coletar()
 
 const setarDados = async ()=>{
   const resposta = await geyById(idDelecao);
@@ -116,18 +121,17 @@ tbody.addEventListener('dblclick', evento =>{
   toggleFormSaida();
 })
 
-async function carregarTabela(){
-  const resultado = await coletar();
-  console.log(resultado.length);
+async function carregarTabela(resultado){
+  const item = resultado.data;
   var tr = '';
-  for (let index = 0; index < resultado.length; index++) {
+  for (let index = 0; index < item.length; index++) {
     tr += '<tr onClick="selecionar('+index+')" id='+index+'>';
-    tr += '<td>' + resultado[index].ID + '</td>';
-    tr += '<td>' + resultado[index].DESCRICAO + '</td>';
-    tr += '<td>' + resultado[index].FRACAO + '</td>';
-    tr += '<td>' + resultado[index].MIN + '</td>';
-    tr += '<td>' + resultado[index].QUANTIDADE + '</td>';
-    tr += '<td>' + resultado[index].REPO + '</td>';
+    tr += '<td>' + item[index].ID + '</td>';
+    tr += '<td>' + item[index].DESCRICAO + '</td>';
+    tr += '<td>' + item[index].FRACAO + '</td>';
+    tr += '<td>' + item[index].MIN + '</td>';
+    tr += '<td>' + item[index].QUANTIDADE + '</td>';
+    tr += '<td>' + item[index].REPO + '</td>';
     tr += '</tr>';
   }
   tbody.innerHTML = tr;
