@@ -36,8 +36,8 @@ function atualizar(descricao, novaDescricao, fracao, minimo, quantidade, reposic
   })
 }
 
-function salvarHistorico(nome, descricao, operacao, quantidade, data){
-  axios.post(urlH,{
+async function salvarHistorico(nome, descricao, operacao, quantidade, data){
+  await axios.post(urlH,{
     "data":{
       "NOME":nome,
       "DESCRICAO": descricao,
@@ -48,8 +48,8 @@ function salvarHistorico(nome, descricao, operacao, quantidade, data){
   })
 }
 
-function atualizarQtdItem(id, quantidade, reposicao){
-  axios.patch(`${url}/ID/${id}`,{
+async function atualizarQtdItem(id, quantidade, reposicao){
+  await axios.patch(`${url}/ID/${id}`,{
     "data":{
       "QUANTIDADE": quantidade,
       "REPO": reposicao
@@ -228,9 +228,10 @@ document.querySelector("#botao_enviar_saida").addEventListener("click", (evento)
     
       let novaQuant = (parseInt(quantidadeAntiga)  + parseInt(quant) );
       let reposicao = (novaQuant - parseInt(quantidadeMinima.value));
-      console.log('antiga '+quantidadeAntiga + ' atual '+quant+ ' nova '+novaQuant)
+      //console.log('antiga '+quantidadeAntiga + ' atual '+quant+ ' nova '+novaQuant)
       try{
         atualizarQtdItem(idDelecao, novaQuant, reposicao);
+        salvarHistorico(nomeFuncionario, desc, opera, quant, formarter.format(currentTime));
       }
       catch(err){
         alert("Falha na operação")
@@ -241,22 +242,16 @@ document.querySelector("#botao_enviar_saida").addEventListener("click", (evento)
     else{
       let novaQuant = (parseInt(quantidadeAntiga)  - parseInt(quant) );
       let reposicao = (novaQuant - parseInt(quantidadeMinima.value));
-      console.log('antiga '+quantidadeAntiga + ' atual '+quant+ ' nova '+novaQuant)
+      //console.log('antiga '+quantidadeAntiga + ' atual '+quant+ ' nova '+novaQuant)
       try{
         atualizarQtdItem(idDelecao, novaQuant, reposicao)
+        salvarHistorico(nomeFuncionario, desc, opera, quant, formarter.format(currentTime));
       }
       catch(msg){
         alert("Falha na operação")
         return 0;
       }
       
-    }
-    
-    try{
-      salvarHistorico(nomeFuncionario, desc, opera, quant, formarter.format(currentTime));
-    }catch(msg){
-      alert("Falha ao salvar o historico")
-      return 0;
     }
       alert("Registro incluido com sucesso");
   }
@@ -335,7 +330,7 @@ document.getElementById('relatorio').addEventListener("click", (evento) => {
 
 document.querySelector('#buscar').addEventListener('click', (evento)=>{
   const desc = document.querySelector('#search').value;
-  console.log(desc);
+  //console.log(desc);
   coletarDescPart(desc);
   
 })
