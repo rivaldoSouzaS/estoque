@@ -331,8 +331,8 @@ function toggleFormSaida(){
 }
 
 function toggleLoader(){
-  const loader = document.querySelector(".loader");
-  loader.classList.toggle("loader_active");
+  const loader = document.querySelector(".over-loader");
+  loader.classList.toggle("over_loader");
 }
 
 document.getElementById('relatorio').addEventListener("click", (evento) => {

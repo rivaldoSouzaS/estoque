@@ -127,22 +127,28 @@ a:hover {
     transform: translateY(-50px) scaleX(1);
   }
 }
-.content_table .loader {
+.content_table .over-loader {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+}
+.content_table .over-loader .loader {
   width: 120px;
   height: 75px;
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
   justify-content: space-between;
-  margin: 100px auto;
+  margin: 20% auto;
 }
-.content_table .loader span {
+.content_table .over-loader .loader span {
   font-size: 22px;
   text-transform: uppercase;
   margin: auto;
   color: rgb(72, 190, 116);
 }
-.content_table .loader .ball {
+.content_table .over-loader .loader .ball {
   width: 25px;
   height: 25px;
   border-radius: 50%;
@@ -150,15 +156,15 @@ a:hover {
   -webkit-animation: bounce 0.5s alternate infinite;
           animation: bounce 0.5s alternate infinite;
 }
-.content_table .loader .ball:nth-child(2) {
+.content_table .over-loader .loader .ball:nth-child(2) {
   -webkit-animation-delay: 0.16s;
           animation-delay: 0.16s;
 }
-.content_table .loader .ball:nth-child(3) {
+.content_table .over-loader .loader .ball:nth-child(3) {
   -webkit-animation-delay: 0.32s;
           animation-delay: 0.32s;
 }
-.content_table .loader_active {
+.content_table .over_loader {
   display: none;
 }
 .content_table .content_table_Wrapper {
