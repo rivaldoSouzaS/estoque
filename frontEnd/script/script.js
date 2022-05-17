@@ -64,6 +64,7 @@ async function atualizarQtdItem(id, quantidade, reposicao){
 }
 
 const coletar = async()=>{
+  
   const result = await axios.get(`${url}?sort_by=DESCRICAO&sort_order=asc`);
   carregarTabela(result)
   //return result.data;
@@ -127,7 +128,7 @@ async function carregarTabela(resultado){
   for (let index = 0; index < item.length; index++) {
     tr += '<tr onClick="selecionar('+index+')" id='+index+'>';
     tr += '<td>' + item[index].ID + '</td>';
-    tr += '<td>' + item[index].DESCRICAO + '</td>';
+    tr += '<td id="td-desc">' + item[index].DESCRICAO + '</td>';
     tr += '<td>' + item[index].FRACAO + '</td>';
     tr += '<td>' + item[index].MIN + '</td>';
     tr += '<td>' + item[index].QUANTIDADE + '</td>';
@@ -135,6 +136,11 @@ async function carregarTabela(resultado){
     tr += '</tr>';
   }
   tbody.innerHTML = tr;
+
+  //document.getElementsByClassName("content_table_Wrapper").style.display = "block";
+  toggleLoader()
+  console.log("teste massa")
+  
 }
 
 function selecionar(_id){
@@ -322,6 +328,11 @@ function toggleForm(){
 function toggleFormSaida(){
   const formularioSaida = document.querySelector(".over-saida");
   formularioSaida.classList.toggle("over_active");
+}
+
+function toggleLoader(){
+  const loader = document.querySelector(".loader");
+  loader.classList.toggle("loader_active");
 }
 
 document.getElementById('relatorio').addEventListener("click", (evento) => {

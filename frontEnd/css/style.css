@@ -3,14 +3,14 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  background-color: #48be74;
+  background-color: rgb(72, 190, 116);
 }
 .content-nav .dropdown {
   display: flex;
   list-style: none;
   margin: 0;
   padding: 15px 20px;
-  color: white;
+  color: rgb(255, 255, 255);
   font-size: 25px;
 }
 .content-nav .dropdown .dropdown__item {
@@ -27,7 +27,8 @@
 }
 .content-nav .dropdown .dropdown__item .dropdown__submenu {
   list-style: none;
-  background-color: #61e409;
+  background-color: rgb(97, 228, 9);
+  z-index: 100;
   border-radius: 5px;
   margin: 10px 0px 0px 0px;
   padding: 15px;
@@ -42,14 +43,14 @@
 .content-nav .dropdown .dropdown__item .dropdown__submenu:after {
   content: " ";
   border: 10px solid transparent;
-  border-bottom-color: #61e409;
+  border-bottom-color: rgb(97, 228, 9);
   left: 25%;
   position: absolute;
   bottom: 133px;
   transform: translateX(-110%);
 }
 .content-nav .dropdown .dropdown__item .dropdown__submenu .dropdown__submenu--item {
-  color: white;
+  color: rgb(255, 255, 255);
 }
 .content-nav .dropdown .dropdown__item .dropdown__submenu .dropdown__submenu--item:not(:last-child) {
   margin-bottom: 10px;
@@ -86,19 +87,19 @@
   font-size: 18px;
   color: white;
   margin: 0px;
-  background-color: #48be74;
+  background-color: rgb(72, 190, 116);
 }
 .content-nav .content-nav-search #buscar:hover {
-  background-color: #88e2a6;
+  background-color: rgb(136, 226, 166);
   cursor: pointer;
 }
 
 a {
-  color: white;
+  color: rgb(255, 255, 255);
   text-decoration: none;
 }
 a:hover {
-  color: white;
+  color: rgb(255, 255, 255);
   text-decoration: none;
 }
 
@@ -106,25 +107,90 @@ a:hover {
   max-width: 90%;
   margin: 0 auto;
   text-align: center;
-  color: #028b9c;
+  color: rgb(2, 139, 156);
 }
 
-.table {
+@-webkit-keyframes bounce {
+  from {
+    transform: scaleX(1.25);
+  }
+  to {
+    transform: translateY(-50px) scaleX(1);
+  }
+}
+
+@keyframes bounce {
+  from {
+    transform: scaleX(1.25);
+  }
+  to {
+    transform: translateY(-50px) scaleX(1);
+  }
+}
+.content_table .loader {
+  width: 120px;
+  height: 75px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin: 100px auto;
+}
+.content_table .loader span {
+  font-size: 22px;
+  text-transform: uppercase;
+  margin: auto;
+  color: rgb(72, 190, 116);
+}
+.content_table .loader .ball {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: rgb(72, 190, 116);
+  -webkit-animation: bounce 0.5s alternate infinite;
+          animation: bounce 0.5s alternate infinite;
+}
+.content_table .loader .ball:nth-child(2) {
+  -webkit-animation-delay: 0.16s;
+          animation-delay: 0.16s;
+}
+.content_table .loader .ball:nth-child(3) {
+  -webkit-animation-delay: 0.32s;
+          animation-delay: 0.32s;
+}
+.content_table .loader_active {
+  display: none;
+}
+.content_table .content_table_Wrapper {
+  height: 75vh;
+  overflow-y: scroll;
+}
+.content_table .content_table_Wrapper .table {
   width: 100%;
   border-collapse: collapse;
 }
-
-.coluna {
+.content_table .content_table_Wrapper .table th {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0px;
+  background-color: rgb(72, 190, 116);
+  color: white;
+  font-size: 20px;
+}
+.content_table .content_table_Wrapper .table .corpo_tabela .coluna {
   background-color: rgba(96, 190, 72, 0.39);
   font-size: 20px;
-  color: #028b9c;
+  color: rgb(2, 139, 156);
   padding: 5px 5px;
 }
-
-td {
-  color: #028b9c;
+.content_table .content_table_Wrapper .table .corpo_tabela td {
+  color: rgb(2, 139, 156);
   font-size: 20px;
   padding: 10px 0px;
+  text-align: center;
+}
+.content_table .content_table_Wrapper .table .corpo_tabela #td-desc {
+  text-align: start;
 }
 
 tr:nth-of-type(even) {
@@ -155,7 +221,7 @@ tr:nth-of-type(even) {
   width: 30%;
   border-style: solid;
   border-radius: 20px;
-  border-color: #059ccf;
+  border-color: rgb(5, 156, 207);
 }
 .over-cad .box .formulario .input_item_salvar {
   border-style: solid;
@@ -166,7 +232,7 @@ tr:nth-of-type(even) {
   height: 28px;
 }
 .over-cad .box .formulario .label_input {
-  color: #059ccf;
+  color: rgb(5, 156, 207);
 }
 .over-cad .box .formulario #label-quant {
   margin-top: 10px;
@@ -182,7 +248,7 @@ tr:nth-of-type(even) {
   background-color: red;
 }
 .over-cad .box .formulario .botoes_cadastro #botao_enviar, .over-cad .box .formulario .botoes_cadastro #botao_cencelar {
-  background-color: #48be74;
+  background-color: rgb(72, 190, 116);
   width: 100px;
   outline: none;
   border-style: none;
@@ -246,10 +312,10 @@ tr:nth-of-type(even) {
   width: 30%;
   border-style: solid;
   border-radius: 20px;
-  border-color: #059ccf;
+  border-color: rgb(5, 156, 207);
 }
 .over-saida .box .formulario-saida #sl-saida {
-  background-color: #48be74;
+  background-color: rgb(72, 190, 116);
   width: 100%;
   margin-top: 5px;
   outline: none;
@@ -269,7 +335,7 @@ tr:nth-of-type(even) {
   height: 28px;
 }
 .over-saida .box .formulario-saida .label_input {
-  color: #059ccf;
+  color: rgb(5, 156, 207);
 }
 .over-saida .box .formulario-saida #label-quant-saida {
   margin-top: 10px;
@@ -285,7 +351,7 @@ tr:nth-of-type(even) {
   margin-right: 10px;
 }
 .over-saida .box .formulario-saida .botoes_saida #botao_enviar_saida, .over-saida .box .formulario-saida .botoes_saida #botao_cencelar_saida {
-  background-color: #48be74;
+  background-color: rgb(72, 190, 116);
   width: 100px;
   outline: none;
   border-style: none;

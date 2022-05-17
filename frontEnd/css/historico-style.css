@@ -2,14 +2,14 @@
   display: flex;
   margin: 0;
   padding: 15px 20px;
-  background-color: #48be74;
+  background-color: rgb(72, 190, 116);
 }
 
 #titulo {
   max-width: 90%;
   margin: 0 auto;
   text-align: center;
-  color: #028b9c;
+  color: rgb(2, 139, 156);
 }
 
 .table {
@@ -20,12 +20,12 @@
 .coluna {
   background-color: rgba(96, 190, 72, 0.39);
   font-size: 15px;
-  color: #028b9c;
+  color: rgb(2, 139, 156);
   padding: 5px 0px;
 }
 
 td {
-  color: #028b9c;
+  color: rgb(2, 139, 156);
   font-size: 20px;
   padding-left: 5px;
 }
@@ -49,7 +49,7 @@ td {
   padding: 5px 0px 5px 0px;
 }
 .contente_botoes .input_item {
-  background-color: #48be74;
+  background-color: rgb(72, 190, 116);
   outline: none;
   border-style: none;
   border-radius: 5px;
